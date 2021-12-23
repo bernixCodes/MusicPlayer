@@ -8,6 +8,7 @@ const artist = document.getElementById('artist');
 const progress = document.getElementById('progress');
 const durationEl = document.getElementById('duration');
 const currentTimeEl = document.getElementById('current-time');
+const progressContainer = document.getElementById('progress-container')
 
 let isPlaying = false;
 let songIndex = 0;
@@ -110,6 +111,16 @@ function updatedTime(e) {
     }
     currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`
 
+    progressContainer.addEventListener('click', setProgress)
+    audio.addEventListener('ended',nextSong)
 
+    function setProgress(e){
+        console.log(e);
+        const width = this.clientWidth;
+        const positionClicked = e.offsetX;
+        const {duration} = audio;
+        audio.currentTime = (positionClicked/width)* duration;
+    }
+ 
 };
 
