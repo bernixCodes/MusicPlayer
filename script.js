@@ -6,6 +6,8 @@ const image = document.querySelector('img');
 const title = document.getElementById('title');
 const artist = document.getElementById('artist');
 const progress = document.getElementById('progress');
+const durationEl = document.getElementById('duration');
+const currentTimeEl = document.getElementById('current-time');
 
 let isPlaying = false;
 let songIndex = 0;
@@ -67,6 +69,7 @@ function prevSong(){
         songIndex = songs.length -1;
     }
     loadSong(songs[songIndex])
+    playSong()
 }
 
 function nextSong(){
@@ -75,6 +78,7 @@ function nextSong(){
         songIndex =0;
     }
     loadSong(songs[songIndex])
+    playSong()
 }
 
 audio.addEventListener('timeupdate', updatedTime);
@@ -87,7 +91,24 @@ function updatedTime(e) {
     let progressPercentage = (currentTime/duration) * 100;
     progress.style.width = `${progressPercentage}%`
 
-    
+    //get duration minutes
+    let durationMinutes = Math.floor(duration/60);
+    let durationSeconds = Math.floor(duration % 60);
+    if(durationSeconds < 10){
+        durationSeconds = `0${durationSeconds}`
+    }
+    if(durationSeconds){
+     durationEl.textContent = `${durationMinutes}:${durationSeconds}`
+
+    }
+
+    //get current time minutes
+    let currentMinutes = Math.floor(currentTime/60);
+    let currentSeconds = Math.floor(currentTime % 60);
+    if(currentSeconds < 10){
+        currentSeconds = `0${currentSeconds}`
+    }
+    currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`
 
 
 };
